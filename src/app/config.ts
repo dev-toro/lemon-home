@@ -1,4 +1,8 @@
-// Please add here your API secrets
+/**
+ * == WARNING ==
+ * Not for production use.
+ * ToDo: retrieve secrets safely
+ */
 
 // --- FOURSQUARE SECRETS ---
 export const FOURSQUARE_CLIENT_ID = "XXX";
