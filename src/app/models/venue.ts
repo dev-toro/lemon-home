@@ -1,6 +1,6 @@
 import { ILocation, IVenueDetailsResult } from "./models";
 import { LatLngExpression } from "leaflet";
-import { Observable, Subject } from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 export class Venue {
     // ToDo: Add proper accessors for the class variables.
@@ -13,7 +13,7 @@ export class Venue {
     public address: string;
     public isSelected = false;
 
-    public dataReady$ = new Subject();
+    public dataReady$ = new BehaviorSubject<boolean>(false);
 
     public constructor(id: string, name: string, location: ILocation) {
         this.id = id;
@@ -27,11 +27,15 @@ export class Venue {
         this.rating = details.rating || 0;
         this.image = details.image || "";
         this.address = details.address || "";
-        this.dataReady$.next();
+        this.dataReady$.next(true);
     }
 
-    public isDataReady(): Observable<any> {
+    public isDataReady$(): Observable<boolean> {
         return this.dataReady$.asObservable();
+    }
+
+    public hasDetailsData(): boolean {
+      return this.dataReady$.getValue();
     }
 
     public select(): void {

@@ -66,7 +66,9 @@ export class VenueManagerService implements OnDestroy {
         this.venueSelectionRequest$.pipe(takeUntil(this.destroy$)).subscribe((venue: Venue) => {
             this.deselectOtherVenues();
             venue.select();
-            this.fetchVenueDetails(venue);
+            if(!venue.hasDetailsData()){
+              this.fetchVenueDetails(venue);
+            }
             this.venueSelectionResult$.next(venue);
         });
     }
